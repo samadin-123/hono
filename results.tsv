@@ -1,1 +1,2 @@
 thesis	attempt	metric	baseline	status	summary
+#1	thesis/1-cache-static-route-lookups-in-matcher	11124776.6600	10963282.8100	accepted	Added a simple cache in the matcher closure to avoid repeated staticMap lookups for high-traffic routes. Router tests pass, ~1.47% improvement.
