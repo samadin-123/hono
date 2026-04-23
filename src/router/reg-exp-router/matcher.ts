@@ -11,11 +11,22 @@ export function match<R extends Router<T>, T>(this: R, method: string, path: str
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const matchers: MatcherMap<T> = (this as any).buildAllMatchers()
 
+  let cachedMethod: string | undefined
+  let cachedPath: string | undefined
+  let cachedResult: Result<T> | undefined
+
   const match = ((method, path) => {
     const matcher = (matchers[method] || matchers[METHOD_NAME_ALL]) as Matcher<T>
 
+    if (cachedMethod === method && cachedPath === path && cachedResult) {
+      return cachedResult
+    }
+
     const staticMatch = matcher[2][path]
     if (staticMatch) {
+      cachedMethod = method
+      cachedPath = path
+      cachedResult = staticMatch
       return staticMatch
     }
 
